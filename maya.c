@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
+
 int main(void) {
 
     // Creating a socket
@@ -58,10 +59,11 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
-    printf("%.*s", (int) size, buf);
+    printf("%.*s\n", (int) size, buf);
    
 
     close(listener);
+
 
     return 0;
 }

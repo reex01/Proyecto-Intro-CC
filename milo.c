@@ -8,7 +8,15 @@
 #include <unistd.h>
 
 
-int main(void) {
+int main(int argc, char *argv[]) {
+
+    if (argc != 2) {
+        printf("Please provide a single string argument\n");
+        return EXIT_FAILURE;
+    }
+
+    char *input = argv[1];
+    size_t inputlen = strlen(input);
 
     // Creating a socket
     int tcp_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -40,7 +48,7 @@ int main(void) {
     }
     
     // Sending the data or message to the listener
-    ssize_t size = send(tcp_socket, "Te amo\n", 7, 0);
+    ssize_t size = send(tcp_socket, input, inputlen, 0);
     if (size < 0) {
         perror("Failed to send message to listener");
         return EXIT_FAILURE;
