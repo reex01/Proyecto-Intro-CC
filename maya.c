@@ -8,6 +8,26 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
+char posicion(char c, int conver) {
+    if (c >= 'A' && c <= 'Z') {
+        c -= 'A';
+        c += conver;
+        c %= 26;
+        c += 'A';
+    } else if (c >= 'a' && c <= 'z') {
+        c -= 'a';
+        c += conver;
+        c %= 26;
+        c += 'a';
+    }
+    return c;
+}
+
+void cesar(char *cadena, int conver, size_t size) {
+    for (size_t i=0; i < size; i++) {
+        cadena[i] = posicion(cadena[i], conver);
+    } 
+}
 
 int main(void) {
 
@@ -59,8 +79,13 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
-    printf("%.*s\n", (int) size, buf);
-   
+    printf("Encriptado: %.*s\n", (int) size, buf);
+
+    cesar(buf, 13, size); 
+
+    printf("Desencriptado: %.*s\n", (int) size, buf);
+
+    free(buf);
 
     close(listener);
 

@@ -7,6 +7,30 @@
 #include <string.h>
 #include <unistd.h>
 
+char posicion(char c, int conver) {
+    if (c >= 'A' && c <= 'Z') {
+        c -= 'A';
+        c += conver;
+        c %= 26;
+        c += 'A';
+    } else if (c >= 'a' && c <= 'z') {
+        c -= 'a';
+        c += conver;
+        c %= 26;
+        c += 'a';
+    }
+    return c;
+}
+
+char *cesar(char *cadena, int conver, size_t size) {
+    char *newstring = malloc(size+1);
+    for (size_t i=0; i < size; i++) {
+        newstring[i] = posicion(cadena[i], conver);
+    } 
+    newstring[size] = '\0';
+    return newstring;
+}
+
 
 int main(int argc, char *argv[]) {
 
@@ -17,6 +41,10 @@ int main(int argc, char *argv[]) {
 
     char *input = argv[1];
     size_t inputlen = strlen(input);
+
+    // Cesar shift
+    char *encriptado = cesar(input, 13, inputlen);
+
 
     // Creating a socket
     int tcp_socket = socket(AF_INET, SOCK_STREAM, 0);
@@ -48,12 +76,14 @@ int main(int argc, char *argv[]) {
     }
     
     // Sending the data or message to the listener
-    ssize_t size = send(tcp_socket, input, inputlen, 0);
+    ssize_t size = send(tcp_socket, encriptado, inputlen, 0);
     if (size < 0) {
         perror("Failed to send message to listener");
         return EXIT_FAILURE;
     }
 
+    free(encriptado);
+    
     close(tcp_socket);
 
     return 0;
