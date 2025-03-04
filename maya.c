@@ -29,7 +29,14 @@ void cesar(char *cadena, int conver, size_t size) {
     } 
 }
 
-int main(void) {
+int main(int argc, char *argv[]) {
+
+    if (argc != 2) {
+        printf("Usage: %s <número desencriptado> \n", argv[0]);
+        return EXIT_FAILURE;
+    }
+
+    int n = atoi(argv[1]);
 
     // Creating a socket
     int listener = socket(AF_INET, SOCK_STREAM, 0);
@@ -81,7 +88,7 @@ int main(void) {
 
     printf("Encriptado: %.*s\n", (int) size, buf);
 
-    cesar(buf, 13, size); 
+    cesar(buf, n, size); 
 
     printf("Desencriptado: %.*s\n", (int) size, buf);
 

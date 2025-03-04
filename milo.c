@@ -34,16 +34,18 @@ char *cesar(char *cadena, int conver, size_t size) {
 
 int main(int argc, char *argv[]) {
 
-    if (argc != 2) {
-        printf("Please provide a single string argument\n");
+    if (argc != 3) {
+        printf("Usage: %s <número encriptado> <proporciona frase>\n", argv[0]);
         return EXIT_FAILURE;
     }
 
-    char *input = argv[1];
+    int n = atoi(argv[1]);
+
+    char *input = argv[2];
     size_t inputlen = strlen(input);
 
     // Cesar shift
-    char *encriptado = cesar(input, 13, inputlen);
+    char *encriptado = cesar(input, n, inputlen);
 
 
     // Creating a socket
@@ -83,7 +85,7 @@ int main(int argc, char *argv[]) {
     }
 
     free(encriptado);
-    
+
     close(tcp_socket);
 
     return 0;
