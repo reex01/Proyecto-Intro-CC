@@ -7,6 +7,8 @@
 #include <string.h>
 #include <unistd.h>
 
+// Algoritmo de Crifrado Cesar
+
 char posicion(char c, int conver) {
     if (c >= 'A' && c <= 'Z') {
         c -= 'A';
